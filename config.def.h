@@ -19,6 +19,7 @@ static const char *increasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SI
 static const char *decreasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *screenshot[]  = {"escrotum"};
 static const char *screenshotsection[]  = {"escrotum", "-s"};
+static const char *calccmd[] = {"rofi", "-show calc", "-modi calc", "-no-show-match", "-no-sort", NULL};
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -66,13 +67,14 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
+static const char *dmenucmd[] = { "rofi", "-show", "run", NULL};
 static const char *termcmd[]  = { "alacritty", NULL };
 
 #include "shiftview.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = calccmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_t,      togglebar,      {0} },
 	{ MODKEY,                       XK_l,      focusstack,     {.i = +1 } },
@@ -97,7 +99,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-        { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+    { MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
