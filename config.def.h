@@ -19,7 +19,7 @@ static const char *increasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SI
 static const char *decreasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
 static const char *screenshot[]  = {"escrotum"};
 static const char *screenshotsection[]  = {"escrotum", "-s"};
-static const char *calccmd[] = {"rofi", "-show calc", "-modi calc", "-no-show-match", "-no-sort", NULL};
+static const char *calccmd[] = {"rofi", "-show", "calc", "-modi", "calc", "-no-show-match", "-no-sort", NULL};
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
