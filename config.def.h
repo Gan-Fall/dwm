@@ -1,4 +1,5 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
@@ -6,14 +7,18 @@ static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "FiraCode Nerd Font Mono:size=16:style=Regular", "Symbols Nerd Font Mono:size=16:style=Regular", "Noto Sans CJK JP:size=16:style=Regular"};
-static const char dmenufont[]       = "FiraCode Nerd Font Mono:size=16:style=Regular";
+static const char *fonts[]          = { "Space Mono Nerd Font:size=16:style=Regular", "Symbols Nerd Font Mono:size=16:style=Regular", "Noto Sans CJK JP:size=16:style=Regular"};
+static const char dmenufont[]       = "Space Mono Nerd Font:size=16:style=Regular";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
+static const char *increasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL};
+static const char *decreasevolume[]  = {"pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL};
+static const char *screenshot[]  = {"escrotum"};
+static const char *screenshotsection[]  = {"escrotum", "-s"};
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -62,7 +67,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 #include "shiftview.c"
 static const Key keys[] = {
@@ -108,6 +113,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,             XF86XK_AudioRaiseVolume,      spawn,           {.v = increasevolume } },
+	{ 0,             XF86XK_AudioLowerVolume,      spawn,           {.v = decreasevolume } },
+	{ 0,             0xff61,      spawn,           {.v = screenshotsection } },
+	{ MODKEY,             0xff61,      spawn,           {.v = screenshot } },
 };
 
 /* button definitions */
